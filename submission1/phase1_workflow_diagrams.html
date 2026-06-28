@@ -1,0 +1,518 @@
+
+<h2 class="sr-only">Phase 1 workflow diagrams — overview and seven individual workflow flowcharts</h2>
+<style>
+:root {
+  /* Font and Base */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --page-bg: #fbfbfd;
+  
+  /* Standard UI Variables */
+  --border: #d2d2d7;
+  --border-strong: #86868b;
+  --border-accent: #0071e3;
+  --surface-1: #ffffff;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --text-accent: #0071e3;
+  --bg-accent: #e8f2ff;
+
+  /* Node Color Palettes (Light Theme) */
+  --node-gray-bg: #f5f5f7;
+  --node-gray-border: #d2d2d7;
+  --node-gray-text: #1d1d1f;
+  --node-gray-subtext: #6e6e73;
+
+  --node-blue-bg: #f0f7ff;
+  --node-blue-border: #9ecaff;
+  --node-blue-text: #0066cc;
+  --node-blue-subtext: #4c96eb;
+
+  --node-purple-bg: #faf4ff;
+  --node-purple-border: #dfbfff;
+  --node-purple-text: #8610a6;
+  --node-purple-subtext: #b25be3;
+
+  --node-teal-bg: #f0fdfa;
+  --node-teal-border: #99f6e4;
+  --node-teal-text: #0f766e;
+  --node-teal-subtext: #0d9488;
+
+  --node-green-bg: #f2fbf4;
+  --node-green-border: #a2e9b8;
+  --node-green-text: #1b7a43;
+  --node-green-subtext: #2ca45c;
+
+  --node-amber-bg: #fffbf0;
+  --node-amber-border: #ffe08a;
+  --node-amber-text: #b25e00;
+  --node-amber-subtext: #d9822b;
+
+  --arrow-color: #86868b;
+  --shadow-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Dark Mode Preferences */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #161617;
+    
+    --border: #333336;
+    --border-strong: #555559;
+    --border-accent: #2f80ed;
+    --surface-1: #1e1e1f;
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --text-accent: #2f80ed;
+    --bg-accent: #1c2d42;
+
+    --node-gray-bg: #1c1c1e;
+    --node-gray-border: #3a3a3c;
+    --node-gray-text: #f5f5f7;
+    --node-gray-subtext: #8e8e93;
+
+    --node-blue-bg: #0d2847;
+    --node-blue-border: #1d4ed8;
+    --node-blue-text: #60a5fa;
+    --node-blue-subtext: #93c5fd;
+
+    --node-purple-bg: #23123a;
+    --node-purple-border: #6d28d9;
+    --node-purple-text: #c084fc;
+    --node-purple-subtext: #d8b4fe;
+
+    --node-teal-bg: #042f2e;
+    --node-teal-border: #0f766e;
+    --node-teal-text: #2dd4bf;
+    --node-teal-subtext: #5eead4;
+
+    --node-green-bg: #064e3b;
+    --node-green-border: #15803d;
+    --node-green-text: #4ade80;
+    --node-green-subtext: #86efac;
+
+    --node-amber-bg: #451a03;
+    --node-amber-border: #b45309;
+    --node-amber-text: #fbbf24;
+    --node-amber-subtext: #fcd34d;
+
+    --arrow-color: #636366;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* VS Code Dark theme integration */
+body.vscode-dark, .theme-dark, [data-theme="dark"] {
+  --page-bg: var(--vscode-editor-background, #1e1e1e);
+  --border: #3a3a3c;
+  --border-strong: #8e8e93;
+  --border-accent: #2f80ed;
+  --surface-1: #1c1c1e;
+  --text-primary: #f5f5f7;
+  --text-secondary: #8e8e93;
+  --text-accent: #2f80ed;
+  --bg-accent: #172a45;
+
+  --node-gray-bg: #1c1c1e;
+  --node-gray-border: #3a3a3c;
+  --node-gray-text: #f5f5f7;
+  --node-gray-subtext: #8e8e93;
+
+  --node-blue-bg: #0d2847;
+  --node-blue-border: #1d4ed8;
+  --node-blue-text: #60a5fa;
+  --node-blue-subtext: #93c5fd;
+
+  --node-purple-bg: #23123a;
+  --node-purple-border: #6d28d9;
+  --node-purple-text: #c084fc;
+  --node-purple-subtext: #d8b4fe;
+
+  --node-teal-bg: #042f2e;
+  --node-teal-border: #0f766e;
+  --node-teal-text: #2dd4bf;
+  --node-teal-subtext: #5eead4;
+
+  --node-green-bg: #064e3b;
+  --node-green-border: #15803d;
+  --node-green-text: #4ade80;
+  --node-green-subtext: #86efac;
+
+  --node-amber-bg: #451a03;
+  --node-amber-border: #b45309;
+  --node-amber-text: #fbbf24;
+  --node-amber-subtext: #fcd34d;
+
+  --arrow-color: #636366;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+body.vscode-light, .theme-light, [data-theme="light"] {
+  --page-bg: var(--vscode-editor-background, #ffffff);
+  --border: #d2d2d7;
+  --border-strong: #86868b;
+  --border-accent: #0071e3;
+  --surface-1: #f5f5f7;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --text-accent: #0071e3;
+  --bg-accent: #e8f2ff;
+
+  --node-gray-bg: #f5f5f7;
+  --node-gray-border: #d2d2d7;
+  --node-gray-text: #1d1d1f;
+  --node-gray-subtext: #86868b;
+
+  --node-blue-bg: #f0f7ff;
+  --node-blue-border: #bcdbfb;
+  --node-blue-text: #0056b3;
+  --node-blue-subtext: #4b88cc;
+
+  --node-purple-bg: #fcf5ff;
+  --node-purple-border: #e3c9ff;
+  --node-purple-text: #6f2da8;
+  --node-purple-subtext: #9661c9;
+
+  --node-teal-bg: #f0fdfa;
+  --node-teal-border: #99f6e4;
+  --node-teal-text: #0f766e;
+  --node-teal-subtext: #0d9488;
+
+  --node-green-bg: #f0fdf4;
+  --node-green-border: #bbf7d0;
+  --node-green-text: #166534;
+  --node-green-subtext: #15803d;
+
+  --node-amber-bg: #fffbeb;
+  --node-amber-border: #fde68a;
+  --node-amber-text: #92400e;
+  --node-amber-subtext: #b45309;
+
+  --arrow-color: #86868b;
+  --shadow-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Global Reset & Page Styling */
+body {
+  margin: 0;
+  padding: 24px;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Navigation Panel styling */
+#pn {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding: 6px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.pb {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  line-height: 1.4;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pb.on {
+  background: var(--bg-accent);
+  color: var(--text-accent);
+  border-color: var(--border-accent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pb:hover:not(.on) {
+  background: var(--node-gray-bg);
+  color: var(--text-primary);
+}
+
+/* SVG Rendering Container */
+#pd {
+  width: 100%;
+  max-width: 960px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SVG Elements Styling */
+svg {
+  display: block;
+  font-family: var(--font-sans);
+}
+
+/* General Node Rules */
+.node {
+  cursor: pointer;
+}
+
+.node rect {
+  fill: var(--node-bg, var(--surface-1));
+  stroke: var(--node-border, var(--border));
+  stroke-width: 1px;
+  transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+}
+
+.node:hover rect {
+  stroke-width: 1.5px;
+  filter: brightness(0.97);
+}
+
+@media (prefers-color-scheme: dark) {
+  .node:hover rect {
+    filter: brightness(1.12);
+  }
+}
+
+/* Classes mapping */
+.c-gray {
+  --node-bg: var(--node-gray-bg);
+  --node-border: var(--node-gray-border);
+  --node-text: var(--node-gray-text);
+  --node-subtext: var(--node-gray-subtext);
+}
+.c-blue {
+  --node-bg: var(--node-blue-bg);
+  --node-border: var(--node-blue-border);
+  --node-text: var(--node-blue-text);
+  --node-subtext: var(--node-blue-subtext);
+}
+.c-purple {
+  --node-bg: var(--node-purple-bg);
+  --node-border: var(--node-purple-border);
+  --node-text: var(--node-purple-text);
+  --node-subtext: var(--node-purple-subtext);
+}
+.c-teal {
+  --node-bg: var(--node-teal-bg);
+  --node-border: var(--node-teal-border);
+  --node-text: var(--node-teal-text);
+  --node-subtext: var(--node-teal-subtext);
+}
+.c-green {
+  --node-bg: var(--node-green-bg);
+  --node-border: var(--node-green-border);
+  --node-text: var(--node-green-text);
+  --node-subtext: var(--node-green-subtext);
+}
+.c-amber {
+  --node-bg: var(--node-amber-bg);
+  --node-border: var(--node-amber-border);
+  --node-text: var(--node-amber-text);
+  --node-subtext: var(--node-amber-subtext);
+}
+
+/* Text Stylings */
+.th {
+  font-weight: 600;
+  font-size: 13.5px;
+  fill: var(--node-text, var(--text-primary));
+}
+
+.ts {
+  font-weight: 400;
+  font-size: 11px;
+  fill: var(--node-subtext, var(--text-secondary));
+}
+
+/* Connectors / Arrows */
+.arr {
+  stroke: var(--arrow-color);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+</style>
+<div id="pn"></div>
+<div id="pd"></div>
+<script>
+const L=['Overview','W1 · Registration','W2 · Collection','W3 · Validation','W4 · Profile builder','W5 · Completeness','W6 · Comm hub','W7 · Task gen'];
+const DA=`<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+const A=' marker-end="url(#arrow)"';
+const s=[];
+
+s[0]=`<svg width="100%" viewBox="0 0 680 756" role="img"><title>Phase 1 overview</title><desc>Seven sequential workflows inside Phase 1 container, followed by human approval gate and Phase 2</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What role does the customer play in Phase 1?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Customer</text></g>
+<line x1="340" y1="74" x2="340" y2="90" class="arr" ${A}/>
+<rect x="70" y="90" width="540" height="508" rx="16" fill="none" stroke="var(--border-strong)" stroke-width="0.5" stroke-dasharray="8 4"/>
+<text class="ts" x="340" y="108" text-anchor="middle" dominant-baseline="central">Phase 1 — customer onboarding &amp; requirement collection</text>
+<g class="node c-blue" onclick="sendPrompt('Tell me more about W1: Customer Registration')"><rect x="170" y="120" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="136" text-anchor="middle" dominant-baseline="central">W1 · Customer registration</text><text class="ts" x="340" y="154" text-anchor="middle" dominant-baseline="central">Registration agent · duplicate check</text></g>
+<line x1="340" y1="168" x2="340" y2="184" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('Tell me more about W2: Requirement Collection')"><rect x="170" y="184" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="200" text-anchor="middle" dominant-baseline="central">W2 · Requirement collection</text><text class="ts" x="340" y="218" text-anchor="middle" dominant-baseline="central">Extraction agent · NL to preferences</text></g>
+<line x1="340" y1="232" x2="340" y2="248" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('Tell me more about W3: Requirement Validation')"><rect x="170" y="248" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="264" text-anchor="middle" dominant-baseline="central">W3 · Requirement validation</text><text class="ts" x="340" y="282" text-anchor="middle" dominant-baseline="central">Validation agent · feasibility check</text></g>
+<line x1="340" y1="296" x2="340" y2="312" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('Tell me more about W4: Customer Profile Builder')"><rect x="170" y="312" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="328" text-anchor="middle" dominant-baseline="central">W4 · Customer profile builder</text><text class="ts" x="340" y="346" text-anchor="middle" dominant-baseline="central">Profile builder agent · master profile</text></g>
+<line x1="340" y1="360" x2="340" y2="376" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('Tell me more about W5: Completeness Checker')"><rect x="170" y="376" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="392" text-anchor="middle" dominant-baseline="central">W5 · Completeness checker</text><text class="ts" x="340" y="410" text-anchor="middle" dominant-baseline="central">Completeness agent · auto-request</text></g>
+<line x1="340" y1="424" x2="340" y2="440" class="arr" ${A}/>
+<g class="node c-blue" onclick="sendPrompt('Tell me more about W6: Communication Hub')"><rect x="170" y="440" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="456" text-anchor="middle" dominant-baseline="central">W6 · Communication hub</text><text class="ts" x="340" y="474" text-anchor="middle" dominant-baseline="central">Conversation intelligence · all channels</text></g>
+<line x1="340" y1="488" x2="340" y2="504" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('Tell me more about W7: Task Generation')"><rect x="170" y="504" width="340" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="520" text-anchor="middle" dominant-baseline="central">W7 · Task generation</text><text class="ts" x="340" y="538" text-anchor="middle" dominant-baseline="central">Task gen agent · initial task queue</text></g>
+<rect x="90" y="560" width="500" height="18" rx="4" fill="var(--surface-1)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="340" y="569" text-anchor="middle" dominant-baseline="central">AI operations layer · runs across all workflows</text>
+<line x1="340" y1="598" x2="340" y2="614" class="arr" ${A}/>
+<g class="node c-teal" onclick="sendPrompt('Explain the human approval gate at the end of Phase 1')"><rect x="170" y="614" width="340" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="632" text-anchor="middle" dominant-baseline="central">Human approval gate</text><text class="ts" x="340" y="650" text-anchor="middle" dominant-baseline="central">Ops executive · approve · clarify · return</text></g>
+<line x1="340" y1="670" x2="340" y2="686" class="arr" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What happens in Phase 2 after approval?')"><rect x="200" y="686" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="708" text-anchor="middle" dominant-baseline="central">Phase 2 — apartment discovery</text></g>
+</svg>`;
+
+s[1]=`<svg width="100%" viewBox="0 0 680 418" role="img"><title>W1: Customer Registration</title><desc>Customer inputs go to registration agent with duplicate check branching to human review or case ID, both converge to registration complete</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What inputs are needed for customer registration?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Name, phone, email</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Registration Agent do in W1?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Registration agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Duplicate detection · case ID generation</text></g>
+<line x1="340" y1="150" x2="340" y2="170" class="arr" ${A}/>
+<g class="node c-amber" onclick="sendPrompt('What happens when a duplicate customer is detected in W1?')"><rect x="180" y="170" width="320" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="192" text-anchor="middle" dominant-baseline="central">Duplicate customer?</text></g>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 170 234 L 170 254" ${A}/>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 510 234 L 510 254" ${A}/>
+<text class="ts" x="255" y="222" text-anchor="middle" dominant-baseline="central">Yes</text>
+<text class="ts" x="425" y="222" text-anchor="middle" dominant-baseline="central">No</text>
+<g class="node c-teal" onclick="sendPrompt('What does human review involve in W1?')"><rect x="60" y="254" width="220" height="56" rx="8" stroke-width="0.5"/><text class="th" x="170" y="272" text-anchor="middle" dominant-baseline="central">Human review</text><text class="ts" x="170" y="290" text-anchor="middle" dominant-baseline="central">Resolve duplicate manually</text></g>
+<g class="node c-blue" onclick="sendPrompt('What happens after a new customer is registered in W1?')"><rect x="400" y="254" width="220" height="56" rx="8" stroke-width="0.5"/><text class="th" x="510" y="272" text-anchor="middle" dominant-baseline="central">Case ID generated</text><text class="ts" x="510" y="290" text-anchor="middle" dominant-baseline="central">New relocation case</text></g>
+<path class="arr" fill="none" d="M 170 310 L 170 334 L 340 334 L 340 354" ${A}/>
+<path class="arr" fill="none" d="M 510 310 L 510 334 L 340 334 L 340 354" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is the final output of W1?')"><rect x="200" y="354" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="376" text-anchor="middle" dominant-baseline="central">Registration complete</text></g>
+</svg>`;
+
+s[2]=`<svg width="100%" viewBox="0 0 680 384" role="img"><title>W2: Requirement Collection</title><desc>Customer input goes to extraction agent which structures it into six sections producing draft requirement profile</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('How does a customer provide requirements in W2?')"><rect x="190" y="30" width="300" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Customer chat or form input</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Requirement Extraction Agent do in W2?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Requirement extraction agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Converts NL to structured preferences</text></g>
+<line x1="340" y1="150" x2="340" y2="170" class="arr" ${A}/>
+<rect x="60" y="170" width="560" height="130" rx="10" fill="none" stroke="var(--border-strong)" stroke-width="0.5" stroke-dasharray="6 3"/>
+<g class="node c-blue" onclick="sendPrompt('What personal info is collected in W2?')"><rect x="80" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="208" text-anchor="middle" dominant-baseline="central">Personal info</text></g>
+<g class="node c-blue" onclick="sendPrompt('What relocation details are collected in W2?')"><rect x="260" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="340" y="208" text-anchor="middle" dominant-baseline="central">Relocation details</text></g>
+<g class="node c-blue" onclick="sendPrompt('What budget info is collected in W2?')"><rect x="440" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="520" y="208" text-anchor="middle" dominant-baseline="central">Budget</text></g>
+<g class="node c-purple" onclick="sendPrompt('What apartment preferences are collected in W2?')"><rect x="80" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="264" text-anchor="middle" dominant-baseline="central">Apt preferences</text></g>
+<g class="node c-purple" onclick="sendPrompt('What location preferences are collected in W2?')"><rect x="260" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="340" y="264" text-anchor="middle" dominant-baseline="central">Location prefs</text></g>
+<g class="node c-purple" onclick="sendPrompt('What lifestyle preferences are collected in W2?')"><rect x="440" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="520" y="264" text-anchor="middle" dominant-baseline="central">Lifestyle prefs</text></g>
+<line x1="340" y1="300" x2="340" y2="320" class="arr" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is the draft requirement profile output of W2?')"><rect x="200" y="320" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="342" text-anchor="middle" dominant-baseline="central">Draft requirement profile</text></g>
+</svg>`;
+
+s[3]=`<svg width="100%" viewBox="0 0 680 418" role="img"><title>W3: Requirement Validation</title><desc>Validation agent checks feasibility, issues found triggers ops review, both paths merge into validated requirement profile</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What is the draft profile input to W3?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Draft requirement profile</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Validation Agent check in W3?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Validation agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Budget · area · market feasibility</text></g>
+<line x1="340" y1="150" x2="340" y2="170" class="arr" ${A}/>
+<g class="node c-amber" onclick="sendPrompt('What kinds of issues can be flagged in W3?')"><rect x="180" y="170" width="320" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="192" text-anchor="middle" dominant-baseline="central">Issues found?</text></g>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 170 234 L 170 254" ${A}/>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 510 234 L 510 254" ${A}/>
+<text class="ts" x="255" y="222" text-anchor="middle" dominant-baseline="central">Yes</text>
+<text class="ts" x="425" y="222" text-anchor="middle" dominant-baseline="central">No</text>
+<g class="node c-teal" onclick="sendPrompt('What does ops review involve in W3?')"><rect x="60" y="254" width="220" height="56" rx="8" stroke-width="0.5"/><text class="th" x="170" y="272" text-anchor="middle" dominant-baseline="central">Ops review</text><text class="ts" x="170" y="290" text-anchor="middle" dominant-baseline="central">Budget · area · type</text></g>
+<g class="node c-blue" onclick="sendPrompt('What does requirements accepted mean in W3?')"><rect x="400" y="254" width="220" height="44" rx="8" stroke-width="0.5"/><text class="th" x="510" y="276" text-anchor="middle" dominant-baseline="central">Requirements accepted</text></g>
+<path class="arr" fill="none" d="M 170 310 L 170 334 L 340 334 L 340 354" ${A}/>
+<path class="arr" fill="none" d="M 510 298 L 510 334 L 340 334 L 340 354" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is the validated requirement profile?')"><rect x="190" y="354" width="300" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="376" text-anchor="middle" dominant-baseline="central">Validated requirement profile</text></g>
+</svg>`;
+
+s[4]=`<svg width="100%" viewBox="0 0 680 384" role="img"><title>W4: Customer Profile Builder</title><desc>Profile builder agent merges all validated data into master customer profile with six components</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What inputs feed W4?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">All validated sections</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Profile Builder Agent do in W4?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Profile builder agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Merges all validated data</text></g>
+<line x1="340" y1="150" x2="340" y2="170" class="arr" ${A}/>
+<rect x="60" y="170" width="560" height="130" rx="10" fill="none" stroke="var(--border-strong)" stroke-width="0.5" stroke-dasharray="6 3"/>
+<g class="node c-teal" onclick="sendPrompt('What customer info is in the master profile?')"><rect x="80" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="208" text-anchor="middle" dominant-baseline="central">Customer info</text></g>
+<g class="node c-teal" onclick="sendPrompt('What relocation info is in the master profile?')"><rect x="260" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="340" y="208" text-anchor="middle" dominant-baseline="central">Relocation info</text></g>
+<g class="node c-teal" onclick="sendPrompt('What budget info is in the master profile?')"><rect x="440" y="192" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="520" y="208" text-anchor="middle" dominant-baseline="central">Budget info</text></g>
+<g class="node c-blue" onclick="sendPrompt('What apartment preferences are in the master profile?')"><rect x="80" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="264" text-anchor="middle" dominant-baseline="central">Apt preferences</text></g>
+<g class="node c-blue" onclick="sendPrompt('What location prefs are in the master profile?')"><rect x="260" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="340" y="264" text-anchor="middle" dominant-baseline="central">Location prefs</text></g>
+<g class="node c-blue" onclick="sendPrompt('What is communication history in the master profile?')"><rect x="440" y="248" width="160" height="32" rx="6" stroke-width="0.5"/><text class="ts" x="520" y="264" text-anchor="middle" dominant-baseline="central">Comm history</text></g>
+<line x1="340" y1="300" x2="340" y2="320" class="arr" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is the master customer profile?')"><rect x="200" y="320" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="342" text-anchor="middle" dominant-baseline="central">Master customer profile</text></g>
+</svg>`;
+
+s[5]=`<svg width="100%" viewBox="0 0 680 330" role="img"><title>W5: Requirement Completeness Checker</title><desc>Completeness checker verifies all mandatory fields, missing fields trigger AI auto-request, complete profile marked ready</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What is the master profile input to W5?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Master customer profile</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What mandatory fields does the Completeness Checker verify in W5?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Completeness checker agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Verifies all mandatory fields</text></g>
+<line x1="340" y1="150" x2="340" y2="170" class="arr" ${A}/>
+<g class="node c-amber" onclick="sendPrompt('What mandatory fields are checked in W5?')"><rect x="180" y="170" width="320" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="192" text-anchor="middle" dominant-baseline="central">All fields present?</text></g>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 170 234 L 170 254" ${A}/>
+<path class="arr" fill="none" d="M 340 214 L 340 234 L 510 234 L 510 254" ${A}/>
+<text class="ts" x="255" y="222" text-anchor="middle" dominant-baseline="central">No</text>
+<text class="ts" x="425" y="222" text-anchor="middle" dominant-baseline="central">Yes</text>
+<g class="node c-teal" onclick="sendPrompt('What happens when fields are missing in W5?')"><rect x="60" y="254" width="220" height="56" rx="8" stroke-width="0.5"/><text class="th" x="170" y="272" text-anchor="middle" dominant-baseline="central">AI auto-request sent</text><text class="ts" x="170" y="290" text-anchor="middle" dominant-baseline="central">Repeats until complete</text></g>
+<g class="node c-green" onclick="sendPrompt('What does customer profile ready mean in W5?')"><rect x="400" y="254" width="220" height="44" rx="8" stroke-width="0.5"/><text class="th" x="510" y="276" text-anchor="middle" dominant-baseline="central">Customer profile ready</text></g>
+</svg>`;
+
+s[6]=`<svg width="100%" viewBox="0 0 680 330" role="img"><title>W6: Communication Hub</title><desc>Four channels merge to conversation intelligence agent, outputs summarization timeline and context, combined into unified communication timeline</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('How is WhatsApp used in W6?')"><rect x="50" y="30" width="120" height="36" rx="8" stroke-width="0.5"/><text class="th" x="110" y="48" text-anchor="middle" dominant-baseline="central">WhatsApp</text></g>
+<g class="node c-gray" onclick="sendPrompt('How is email used in W6?')"><rect x="190" y="30" width="120" height="36" rx="8" stroke-width="0.5"/><text class="th" x="250" y="48" text-anchor="middle" dominant-baseline="central">Email</text></g>
+<g class="node c-gray" onclick="sendPrompt('How is the customer portal used in W6?')"><rect x="330" y="30" width="120" height="36" rx="8" stroke-width="0.5"/><text class="th" x="390" y="48" text-anchor="middle" dominant-baseline="central">Portal</text></g>
+<g class="node c-gray" onclick="sendPrompt('How are phone call notes used in W6?')"><rect x="470" y="30" width="120" height="36" rx="8" stroke-width="0.5"/><text class="th" x="530" y="48" text-anchor="middle" dominant-baseline="central">Phone notes</text></g>
+<line x1="110" y1="66" x2="110" y2="76" class="arr"/>
+<line x1="250" y1="66" x2="250" y2="76" class="arr"/>
+<line x1="390" y1="66" x2="390" y2="76" class="arr"/>
+<line x1="530" y1="66" x2="530" y2="76" class="arr"/>
+<line x1="110" y1="76" x2="530" y2="76" class="arr"/>
+<line x1="340" y1="76" x2="340" y2="100" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Conversation Intelligence Agent do in W6?')"><rect x="180" y="100" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="118" text-anchor="middle" dominant-baseline="central">Conversation intelligence agent</text><text class="ts" x="340" y="136" text-anchor="middle" dominant-baseline="central">Summarize · timeline · context</text></g>
+<line x1="340" y1="156" x2="340" y2="172" class="arr" ${A}/>
+<line x1="140" y1="172" x2="540" y2="172" class="arr"/>
+<line x1="140" y1="172" x2="140" y2="186" class="arr" ${A}/>
+<line x1="340" y1="172" x2="340" y2="186" class="arr" ${A}/>
+<line x1="540" y1="172" x2="540" y2="186" class="arr" ${A}/>
+<g class="node c-blue" onclick="sendPrompt('What is summarization output in W6?')"><rect x="60" y="186" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="140" y="208" text-anchor="middle" dominant-baseline="central">Summarization</text></g>
+<g class="node c-blue" onclick="sendPrompt('What is the timeline output in W6?')"><rect x="260" y="186" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="208" text-anchor="middle" dominant-baseline="central">Timeline</text></g>
+<g class="node c-blue" onclick="sendPrompt('What is context preservation in W6?')"><rect x="460" y="186" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="540" y="208" text-anchor="middle" dominant-baseline="central">Context</text></g>
+<line x1="140" y1="230" x2="140" y2="246" class="arr"/>
+<line x1="340" y1="230" x2="340" y2="246" class="arr"/>
+<line x1="540" y1="230" x2="540" y2="246" class="arr"/>
+<line x1="140" y1="246" x2="540" y2="246" class="arr"/>
+<line x1="340" y1="246" x2="340" y2="266" class="arr" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is the unified communication timeline?')"><rect x="180" y="266" width="320" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="288" text-anchor="middle" dominant-baseline="central">Unified communication timeline</text></g>
+</svg>`;
+
+s[7]=`<svg width="100%" viewBox="0 0 680 324" role="img"><title>W7: Task Generation</title><desc>Task generation agent fans out to property search, notify ops team and prepare discovery, merged into initial task queue</desc>${DA}
+<g class="node c-gray" onclick="sendPrompt('What profile data feeds into W7?')"><rect x="200" y="30" width="280" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Validated profile</text></g>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" ${A}/>
+<g class="node c-purple" onclick="sendPrompt('What does the Task Generation Agent create in W7?')"><rect x="180" y="94" width="320" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Task generation agent</text><text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">Creates next operational tasks</text></g>
+<line x1="340" y1="150" x2="340" y2="166" class="arr" ${A}/>
+<line x1="140" y1="166" x2="540" y2="166" class="arr"/>
+<line x1="140" y1="166" x2="140" y2="180" class="arr" ${A}/>
+<line x1="340" y1="166" x2="340" y2="180" class="arr" ${A}/>
+<line x1="540" y1="166" x2="540" y2="180" class="arr" ${A}/>
+<g class="node c-blue" onclick="sendPrompt('What is the property search task in W7?')"><rect x="50" y="180" width="180" height="44" rx="8" stroke-width="0.5"/><text class="th" x="140" y="202" text-anchor="middle" dominant-baseline="central">Property search</text></g>
+<g class="node c-blue" onclick="sendPrompt('What does notify ops team mean in W7?')"><rect x="250" y="180" width="180" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="202" text-anchor="middle" dominant-baseline="central">Notify ops team</text></g>
+<g class="node c-blue" onclick="sendPrompt('What is prepare discovery in W7?')"><rect x="450" y="180" width="180" height="44" rx="8" stroke-width="0.5"/><text class="th" x="540" y="202" text-anchor="middle" dominant-baseline="central">Prepare discovery</text></g>
+<line x1="140" y1="224" x2="140" y2="240" class="arr"/>
+<line x1="340" y1="224" x2="340" y2="240" class="arr"/>
+<line x1="540" y1="224" x2="540" y2="240" class="arr"/>
+<line x1="140" y1="240" x2="540" y2="240" class="arr"/>
+<line x1="340" y1="240" x2="340" y2="260" class="arr" ${A}/>
+<g class="node c-green" onclick="sendPrompt('What is in the initial task queue from W7?')"><rect x="190" y="260" width="300" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="282" text-anchor="middle" dominant-baseline="central">Initial task queue</text></g>
+</svg>`;
+
+function show(n){
+  document.querySelectorAll('.pb').forEach((b,i)=>b.classList.toggle('on',i===n));
+  document.getElementById('pd').innerHTML=s[n];
+}
+const nav=document.getElementById('pn');
+L.forEach((l,i)=>{const b=document.createElement('button');b.className='pb';b.textContent=l;b.onclick=()=>show(i);nav.appendChild(b);});
+show(0);
+</script>

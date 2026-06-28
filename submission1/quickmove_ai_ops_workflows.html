@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickMove AI Ops — Workflow Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header .logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6c5ce7, #00b894);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    .tabs {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      overflow-x: auto;
+      padding: 0 40px;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #374151;
+    }
+
+    .tab-btn.active {
+      color: #6c5ce7;
+      border-bottom-color: #6c5ce7;
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 40px 60px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .phase-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    .phase-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 28px;
+      max-width: 700px;
+    }
+
+    .diagram-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .diagram-card object {
+      width: 100%;
+      min-width: 600px;
+      height: auto;
+      display: block;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 40px 0 16px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #9ca3af;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 20px;
+      }
+
+      .tabs {
+        padding: 0 16px;
+      }
+
+      .content {
+        padding: 20px 16px 40px;
+      }
+
+      .tab-btn {
+        padding: 10px 14px;
+        font-size: 12px;
+      }
+
+      .phase-title {
+        font-size: 18px;
+      }
+    }
+
+    /* Answers Styling */
+    .answers-container {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+    .answers-container h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #1a1a2e;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .answers-container h2 {
+      font-size: 17px;
+      margin-top: 32px;
+      margin-bottom: 16px;
+      color: #1a1a2e;
+      border-bottom: 1px solid #f3f4f6;
+      padding-bottom: 6px;
+    }
+    .answers-container h3 {
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: #4b5563;
+    }
+    .answers-container p {
+      margin-bottom: 16px;
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .answers-container ul {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      color: #4b5563;
+      font-size: 14px;
+    }
+    .answers-container li {
+      margin-bottom: 8px;
+    }
+    .answers-container hr {
+      border: 0;
+      border-top: 1px solid #e5e7eb;
+      margin: 30px 0;
+    }
+    .answers-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+    .answers-container th, .answers-container td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .answers-container th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .answers-container tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    .flow-diagram-text {
+      background: #f3f4f6;
+      border-radius: 6px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 15px 0;
+      white-space: pre;
+      overflow-x: auto;
+      color: #1f2937;
+      border: 1px solid #e5e7eb;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+  <header class="header">
+    <div class="logo">Q</div>
+    <h1>QuickMove AI Operations Platform</h1>
+  </header> -->
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+    <button class="tab-btn" onclick="switchTab('phase1')">Phase 1 — Customer Acquisition</button>
+    <button class="tab-btn" onclick="switchTab('phase2')">Phase 2 — Relocation Planning</button>
+    <button class="tab-btn" onclick="switchTab('phase3')">Phase 3 — Property Discovery</button>
+    <button class="tab-btn" onclick="switchTab('phase4')">Phase 4 — Move Coordination</button>
+    <button class="tab-btn" onclick="switchTab('phase5')">Phase 5 — Utility Setup</button>
+    <button class="tab-btn" onclick="switchTab('phase6')">Phase 6 — Post-Move Support</button>
+    <button class="tab-btn" onclick="switchTab('phase7')">Phase 7 — Operations Intelligence</button>
+    <button class="tab-btn" onclick="switchTab('answers')">Answers</button>
+  </nav>
+
+  <main class="content">
+
+    <!-- OVERVIEW -->
+    <section class="tab-panel active" id="panel-overview">
+      <h2 class="phase-title">QuickMove AI Operations Platform</h2>
+      <!-- <p class="phase-subtitle">An AI-powered relocation management system that handles the entire customer journey across 7 phases — from onboarding and property discovery to move coordination, utility setup, and post-move support — with an always-on AI ops layer and human-in-the-loop approvals throughout.</p> -->
+
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="quickmove_complete_system_overview.svg">System Overview</object>
+      </div>
+
+      <div class="section-label">Cross-Phase Architecture</div>
+
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="ai_ops_copilot_structure.svg">AI Operations Copilot</object>
+      </div>
+
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="human_in_loop_architecture.svg">Human-in-the-Loop Architecture</object>
+      </div>
+
+    </section>
+
+    <!-- PHASE 1 -->
+    <section class="tab-panel" id="panel-phase1">
+      <h2 class="phase-title">Phase 1 — Customer Acquisition & Onboarding</h2>
+      <p class="phase-subtitle">Who is the customer?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="customer_intake_flow.svg">Customer Intake Flow</object>
+      </div>
+    </section>
+
+    <!-- PHASE 2 -->
+    <section class="tab-panel" id="panel-phase2">
+      <h2 class="phase-title">Phase 2 — Relocation Planning</h2>
+      <p class="phase-subtitle">What services does the customer need?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase2_relocation_planning.svg">Relocation Planning Workflow</object>
+      </div>
+    </section>
+
+    <!-- PHASE 3 -->
+    <section class="tab-panel" id="panel-phase3">
+      <h2 class="phase-title">Phase 3 — Property Discovery & Booking</h2>
+      <p class="phase-subtitle">How do we procure those services?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase3_property_discovery_booking.svg">Property Discovery & Booking</object>
+      </div>
+    </section>
+
+    <!-- PHASE 4 -->
+    <section class="tab-panel" id="panel-phase4">
+      <h2 class="phase-title">Phase 4 — Move Coordination & Logistics</h2>
+      <p class="phase-subtitle">How do we execute the move?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase4_move_coordination_logistics.svg">Move Coordination &
+          Logistics</object>
+      </div>
+    </section>
+
+    <!-- PHASE 5 -->
+    <section class="tab-panel" id="panel-phase5">
+      <h2 class="phase-title">Phase 5 — Utility & Documentation Setup</h2>
+      <p class="phase-subtitle">How do we complete relocation formalities?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase5_utility_documentation_setup.svg">Utility & Documentation
+          Setup</object>
+      </div>
+    </section>
+
+    <!-- PHASE 6 -->
+    <section class="tab-panel" id="panel-phase6">
+      <h2 class="phase-title">Phase 6 — Post-Move Support & Customer Success</h2>
+      <p class="phase-subtitle">How do we support the customer afterwards?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase6_postmove_support_customer_success.svg">Post-Move Support</object>
+      </div>
+    </section>
+
+    <!-- PHASE 7 -->
+    <section class="tab-panel" id="panel-phase7">
+      <h2 class="phase-title">Phase 7 — Operations Intelligence & Performance</h2>
+      <p class="phase-subtitle">How do we improve the business?</p>
+      <div class="diagram-card">
+        <object type="image/svg+xml" data="phase7_operations_intelligence_performance.svg">Operations
+          Intelligence</object>
+      </div>
+    </section>
+
+    <!-- ANSWERS -->
+    <section class="tab-panel" id="panel-answers">
+      <div class="answers-container">
+        <h1>Highest-Leverage Automation Opportunities</h1>
+
+        <h2>Rank 1: Property Discovery and Booking (Phase 3)</h2>
+        <h3>Automation Opportunities</h3>
+        <ul>
+          <li><strong>Broker Intelligence Agent</strong> – Extract structured property details from WhatsApp, emails, voice notes, images, and PDFs using Gemini/OpenAI + Gemini Vision/Document AI, eliminating manual spreadsheet updates.</li>
+          <li><strong>LLM-powered Property Recommendation</strong> – Use LLM reasoning with customer context (budget, office location, family size, pets, preferences, previous interactions, etc.) to intelligently rank and recommend properties instead of rule-based filtering.</li>
+          <li><strong>Smart Broker Assignment</strong> – Automatically assign the best broker based on locality coverage, workload, and historical performance using n8n workflows + FastAPI, with an Ops approval step before notifying brokers.</li>
+          <li><strong>Visit Scheduling & Reminders</strong> – Automatically identify common availability, create events, and send reminders using Google Calendar API + n8n.</li>
+          <li><strong>Booking Progress Dashboard</strong> – Track the complete booking lifecycle (Searching -> Shortlisted -> Visit Scheduled -> Negotiation -> Booked) using React/Next.js + FastAPI + PostgreSQL/Firebase.</li>
+        </ul>
+        <h3>Health Metric</h3>
+        <p>The time taken from requirement validation to booking confirmation, aiming for under five days. We also measure the percentage of AI-suggested properties that customers actually shortlist.</p>
+        <h3>Possible Edge Cases</h3>
+        <ul>
+          <li>The customer changes their budget or location preferences after viewings begin, making the planning data out of sync.</li>
+          <li>Brokers coordinate details directly with agents off the platform, causing the system to miss negotiation updates.</li>
+        </ul>
+
+        <hr />
+
+        <h2>Rank 2: Service Planning and Task Orchestration (Phase 2)</h2>
+        <h3>Automation Opportunities</h3>
+        <ul>
+          <li><strong>AI Relocation Planner</strong> – Convert customer requirements into a complete relocation execution plan using LLM reasoning.</li>
+          <li><strong>Task Orchestration Engine</strong> – Automatically generate, prioritize, and assign operational tasks based on workload, location, and expertise using n8n + FastAPI.</li>
+          <li><strong>Dependency & Timeline Management</strong> – Create workflow dependencies, schedule execution, and automatically adjust downstream tasks using n8n workflow orchestration.</li>
+          <li><strong>Risk Identification</strong> – Detect unrealistic move dates, missing prerequisites, or overloaded teams using LLM reasoning + business validations.</li>
+          <li><strong>Operations Approval Dashboard</strong> – Present AI-generated plans for review and approval through a React/Next.js dashboard before execution.</li>
+        </ul>
+        <h3>Health Metric</h3>
+        <p>The percentage of generated task lists that are completed without manual changes, targeting above ninety-five percent. We also track the time taken to create and approve plans, aiming for under two hours.</p>
+        <h3>Possible Edge Cases</h3>
+        <ul>
+          <li>A delay in apartment discovery fails to reschedule mover booking and utility setups, causing scheduling conflicts.</li>
+          <li>Seasonal booking spikes overload specific agents because the assignment model did not account for real-time stress.</li>
+        </ul>
+
+        <hr />
+
+        <h2>Rank 3: Customer Acquisition and Onboarding (Phase 1)</h2>
+        <h3>Automation Opportunities</h3>
+        <ul>
+          <li><strong>AI Voice Intake Agent</strong> – Conduct natural voice conversations with customers to collect relocation requirements using Sarvam AI Voice Agents.</li>
+          <li><strong>Intelligent Entity Extraction</strong> – Extract structured customer information (origin, destination, budget, move date, family size, pets, etc.) using LLMs with structured JSON outputs.</li>
+          <li><strong>Dynamic Follow-up Questions</strong>  – Ask only the missing or ambiguous questions using LLM reasoning, making onboarding conversational instead of form-based.</li>
+          <li><strong>Automatic CRM Case Creation</strong> – Generate customer profiles, relocation cases, and onboarding checklists using FastAPI + PostgreSQL/Firebase.</li>
+          <li><strong>Conversation Summary for Ops</strong> – Generate concise customer summaries and next actions for operations executives using LLMs.</li>
+        </ul>
+        <h3>Health Metric</h3>
+        <p>The rate of customer profiles successfully created with all mandatory fields completed, targeting one hundred percent. We also measure the average lead-to-onboarding conversion time.</p>
+        <h3>Possible Edge Cases</h3>
+        <ul>
+          <li>Customers provide conflicting details, like wanting a pet-friendly premium apartment in an area with strict housing rules.</li>
+          <li>AI fails to parse spelling variants of names or addresses, causing duplicate customer accounts in the database.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">QuickMove AI Operations Platform — Workflow Documentation</footer>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        const panels = document.querySelectorAll('.tab-panel');
+        const tabIds = ['overview', 'phase1', 'phase2', 'phase3', 'phase4', 'phase5', 'phase6', 'phase7', 'answers'];
+        b.classList.toggle('active', tabIds[i] === id);
+        panels[i].classList.toggle('active', tabIds[i] === id);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

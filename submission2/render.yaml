@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: quickmove-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # paste your Neon connection string in Render dashboard
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: EMAIL_FROM_NAME
+        value: QuickMove Operations
+      - key: DEMO_MODE
+        value: "false"
+      - key: ALLOWED_ORIGINS
+        sync: false          # paste your Vercel URL here after deploying frontend
+      - key: N8N_WEBHOOK_URL
+        value: "http://localhost:5678/webhook/broker-assignment"

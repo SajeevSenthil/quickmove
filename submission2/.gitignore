@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# Environment — NEVER commit these
+backend/.env
+frontend/.env.local
+
+# Databases
+backend/*.db
+backend/*.sqlite
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Build artifacts
+*.tsbuildinfo
+dist/
+
+# OS
+.DS_Store
+Thumbs.db

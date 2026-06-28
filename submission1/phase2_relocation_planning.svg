@@ -1,0 +1,94 @@
+<svg width="100%" viewBox="0 0 680 610" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Phase 2 — Relocation Planning Workflow</title>
+  <desc>Shows how customer profile from Phase 1 flows through AI-driven task generation, resource allocation, timeline creation, and risk assessment before ops executive approval</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="340" y="28" text-anchor="middle" style="fill:rgb(11,11,11); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Relocation planning</text>
+
+  <!-- Node 1: Customer profile (gray input) -->
+  <g>
+    <rect x="210" y="48" width="260" height="44" rx="6" style="fill:rgb(241,239,232); stroke:rgb(95,94,90); stroke-width:0.5"/>
+    <text x="340" y="70" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68,68,65); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Customer profile from Phase 1</text>
+  </g>
+
+  <!-- Arrow 1→2 -->
+  <line x1="340" y1="92" x2="340" y2="120" style="fill:none; stroke:rgb(137,135,129); stroke-width:1.5" marker-end="url(#arrow)"/>
+
+  <!-- Node 2: AI generates plan (purple - AI action) -->
+  <g>
+    <rect x="190" y="120" width="300" height="52" rx="8" style="fill:rgb(238,237,254); stroke:rgb(83,74,183); stroke-width:1"/>
+    <text x="340" y="140" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60,52,137); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">AI generates relocation plan</text>
+    <text x="340" y="158" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83,74,183); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Task list · timeline · resources · risk flags</text>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <line x1="340" y1="172" x2="340" y2="204" style="fill:none; stroke:rgb(137,135,129); stroke-width:1.5" marker-end="url(#arrow)"/>
+
+  <!-- Node 3: Resource allocation (green) -->
+  <g>
+    <rect x="190" y="204" width="300" height="52" rx="8" style="fill:rgb(225,245,238); stroke:rgb(15,110,86); stroke-width:0.5"/>
+    <text x="340" y="224" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8,80,65); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Resource allocation</text>
+    <text x="340" y="242" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Assign ops exec · map city-specific partners</text>
+  </g>
+
+  <!-- Arrow 3→4 -->
+  <line x1="340" y1="256" x2="340" y2="288" style="fill:none; stroke:rgb(137,135,129); stroke-width:1.5" marker-end="url(#arrow)"/>
+
+  <!-- Node 4: Timeline creation (green) -->
+  <g>
+    <rect x="190" y="288" width="300" height="52" rx="8" style="fill:rgb(225,245,238); stroke:rgb(15,110,86); stroke-width:0.5"/>
+    <text x="340" y="308" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8,80,65); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Timeline &amp; milestone planning</text>
+    <text x="340" y="326" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Phase-wise target dates · dependency mapping</text>
+  </g>
+
+  <!-- Arrow 4→5 -->
+  <line x1="340" y1="340" x2="340" y2="372" style="fill:none; stroke:rgb(137,135,129); stroke-width:1.5" marker-end="url(#arrow)"/>
+
+  <!-- Node 5: Risk assessment (amber) -->
+  <g>
+    <rect x="190" y="372" width="300" height="52" rx="8" style="fill:rgb(250,238,218); stroke:rgb(133,79,11); stroke-width:0.5"/>
+    <text x="340" y="392" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99,56,6); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Risk assessment</text>
+    <text x="340" y="410" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133,79,11); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">City complexity · budget · timeline · season</text>
+  </g>
+
+  <!-- Arrow 5→6 -->
+  <line x1="340" y1="424" x2="340" y2="456" style="fill:none; stroke:rgb(137,135,129); stroke-width:1.5" marker-end="url(#arrow)"/>
+
+  <!-- Node 6: Ops exec reviews (amber - human review) -->
+  <g>
+    <rect x="210" y="456" width="260" height="52" rx="8" style="fill:rgb(250,238,218); stroke:rgb(133,79,11); stroke-width:0.5"/>
+    <text x="340" y="476" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99,56,6); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Ops exec reviews plan</text>
+    <text x="340" y="494" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133,79,11); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Verify feasibility · adjust if needed</text>
+  </g>
+
+  <!-- Branch: Adjust (left) -->
+  <line x1="280" y1="508" x2="130" y2="540" style="fill:none; stroke:rgba(11,11,11,0.2); stroke-width:0.5" marker-end="url(#arrow)"/>
+  <text x="185" y="530" style="fill:rgb(82,81,78); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px">Adjust</text>
+
+  <!-- Node 7 (left): AI revises plan (green) -->
+  <g>
+    <rect x="40" y="540" width="180" height="52" rx="8" style="fill:rgb(225,245,238); stroke:rgb(15,110,86); stroke-width:0.5"/>
+    <text x="130" y="560" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8,80,65); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">AI revises plan</text>
+    <text x="130" y="578" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Incorporate feedback</text>
+  </g>
+
+  <!-- Loop-back dashed arrow from Node 7 to Node 2 -->
+  <path d="M40 566 L20 566 L20 146 L190 146" fill="none" style="stroke:rgba(11,11,11,0.2); stroke-width:0.5; stroke-dasharray:4 3" marker-end="url(#arrow)"/>
+
+  <!-- Branch: Approve (right) -->
+  <line x1="410" y1="508" x2="410" y2="540" style="fill:none; stroke:rgba(11,11,11,0.2); stroke-width:0.5" marker-end="url(#arrow)"/>
+  <text x="430" y="528" style="fill:rgb(82,81,78); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px">Approve</text>
+
+  <!-- Node 8 (right): Plan approved (green) -->
+  <g>
+    <rect x="280" y="540" width="260" height="52" rx="8" style="fill:rgb(225,245,238); stroke:rgb(15,110,86); stroke-width:0.5"/>
+    <text x="410" y="560" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8,80,65); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:14px; font-weight:500">Relocation plan approved</text>
+    <text x="410" y="578" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86); font-family:'Anthropic Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size:12px; font-weight:400">Checklist locked · Phase 3 triggered</text>
+  </g>
+
+</svg>

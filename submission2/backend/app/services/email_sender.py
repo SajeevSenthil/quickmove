@@ -1,20 +1,17 @@
 """
-Direct SMTP email sender — no n8n required.
-Uses Python's built-in smtplib with Gmail TLS.
+Email sender using Resend (HTTPS API — works on Render free tier).
+Render blocks outbound SMTP (port 587), but HTTPS (443) is always open.
+
+Setup: sign up at resend.com → API Keys → copy key → add RESEND_API_KEY to env.
 """
-import smtplib
-import asyncio
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import httpx
 from ..config import settings
 
 
 def _build_assignment_email(customer: dict, broker: dict, assignment: dict) -> str:
     budget_str = "Not specified"
     if customer.get("budget_min") and customer.get("budget_max"):
-        budget_str = (
-            f"Rs.{customer['budget_min']:,} - Rs.{customer['budget_max']:,} / month"
-        )
+        budget_str = f"Rs.{customer['budget_min']:,} - Rs.{customer['budget_max']:,} / month"
     elif customer.get("budget_max"):
         budget_str = f"Up to Rs.{customer['budget_max']:,} / month"
 
@@ -27,9 +24,9 @@ def _build_assignment_email(customer: dict, broker: dict, assignment: dict) -> s
 You have been assigned a new property search request through QuickMove.
 Please review the customer requirements below and begin shortlisting.
 
-─────────────────────────────────────────
+-----------------------------------------
 CUSTOMER DETAILS
-─────────────────────────────────────────
+-----------------------------------------
 Name            : {customer['name']}
 Destination     : {customer['city']}
 Apartment Type  : {customer.get('apartment_type') or 'Not specified'}
@@ -44,66 +41,26 @@ Move Date       : {customer.get('move_date') or 'Flexible'}
 Special Requirements:
 {specials_text}
 
-─────────────────────────────────────────
+-----------------------------------------
 ASSIGNMENT DETAILS
-─────────────────────────────────────────
+-----------------------------------------
 Assignment ID   : #{assignment['id']}
 Assigned By     : {assignment.get('approved_by') or 'Operations Team'}
 Respond By      : {assignment.get('deadline') or 'As soon as possible'}
 
-─────────────────────────────────────────
+-----------------------------------------
 
 Next Steps:
 1. Begin property search in the specified localities
 2. Shortlist 3-5 properties matching the criteria
-3. Share the shortlist with QuickMove within the deadline
+3. Share shortlist with QuickMove within the deadline
 4. Coordinate site visits with the customer
 
-For questions, contact the QuickMove operations team.
+For questions, contact ops@quickmove.in
 
 Best regards,
 QuickMove Operations
-ops@quickmove.in
 """
-
-
-def _build_message(to_email: str, subject: str, body: str) -> MIMEMultipart:
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = f"{settings.EMAIL_FROM_NAME} <{settings.SMTP_USER}>"
-    msg["To"] = to_email
-    msg.attach(MIMEText(body, "plain"))
-    return msg
-
-
-def _send_smtp(to_email: str, subject: str, body: str) -> bool:
-    """
-    Tries SSL (port 465) first, then STARTTLS (port 587) as fallback.
-    Runs blocking — call via asyncio.to_thread.
-    """
-    if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        return False
-
-    msg = _build_message(to_email, subject, body)
-    raw = msg.as_string()
-    host = settings.SMTP_HOST
-
-    # Try SSL on 465 first (works even when ISPs block 587)
-    try:
-        with smtplib.SMTP_SSL(host, 465) as server:
-            server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            server.sendmail(settings.SMTP_USER, to_email, raw)
-        return True
-    except Exception:
-        pass
-
-    # Fall back to STARTTLS on 587
-    with smtplib.SMTP(host, 587) as server:
-        server.ehlo()
-        server.starttls()
-        server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-        server.sendmail(settings.SMTP_USER, to_email, raw)
-    return True
 
 
 async def send_broker_assignment_email(
@@ -112,22 +69,68 @@ async def send_broker_assignment_email(
     assignment: dict,
 ) -> bool:
     """
-    Sends an assignment email to the broker.
-    Returns True if sent, False if SMTP not configured or send failed.
+    Sends assignment email via Resend HTTPS API.
+    Falls back to SMTP if RESEND_API_KEY is not set (works locally, blocked on Render free).
     """
-    if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        return False
-
-    subject = (
-        f"New Property Search Assignment - {customer['name']} ({customer['city']})"
-    )
+    subject = f"New Property Search Assignment - {customer['name']} ({customer['city']})"
     body = _build_assignment_email(customer, broker, assignment)
 
+    if settings.RESEND_API_KEY:
+        return await _send_via_resend(broker["email"], subject, body)
+
+    if settings.SMTP_USER and settings.SMTP_PASSWORD:
+        return await _send_via_smtp(broker["email"], subject, body)
+
+    print("[email] No provider configured — set RESEND_API_KEY in environment")
+    return False
+
+
+async def _send_via_resend(to_email: str, subject: str, body: str) -> bool:
     try:
-        # Run blocking smtplib in a thread so it doesn't block the event loop
-        await asyncio.to_thread(_send_smtp, broker["email"], subject, body)
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.post(
+                "https://api.resend.com/emails",
+                headers={
+                    "Authorization": f"Bearer {settings.RESEND_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "from": settings.EMAIL_FROM,
+                    "to": [to_email],
+                    "subject": subject,
+                    "text": body,
+                },
+            )
+        if response.status_code in (200, 201):
+            return True
+        print(f"[email] Resend error {response.status_code}: {response.text}")
+        return False
+    except Exception as exc:
+        print(f"[email] Resend exception: {exc}")
+        return False
+
+
+async def _send_via_smtp(to_email: str, subject: str, body: str) -> bool:
+    import smtplib
+    import asyncio
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+
+    def _blocking_send():
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = settings.SMTP_USER
+        msg["To"] = to_email
+        msg.attach(MIMEText(body, "plain"))
+        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
+            server.ehlo()
+            server.starttls()
+            server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+            server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
+
+    try:
+        await asyncio.to_thread(_blocking_send)
         return True
     except Exception as exc:
-        # Log but don't crash — assignment is still valid without email
-        print(f"[email] Failed to send to {broker['email']}: {exc}")
+        print(f"[email] SMTP error: {exc}")
         return False

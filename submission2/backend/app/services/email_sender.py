@@ -86,6 +86,11 @@ async def send_broker_assignment_email(
 
 
 async def _send_via_resend(to_email: str, subject: str, body: str) -> bool:
+    # If RESEND_TEST_RECIPIENT is set, override recipient (free tier without domain)
+    actual_to = settings.RESEND_TEST_RECIPIENT or to_email
+    if actual_to != to_email:
+        body = f"[TEST MODE — original recipient: {to_email}]\n\n{body}"
+
     try:
         async with httpx.AsyncClient(timeout=15.0) as client:
             response = await client.post(
@@ -96,7 +101,7 @@ async def _send_via_resend(to_email: str, subject: str, body: str) -> bool:
                 },
                 json={
                     "from": settings.EMAIL_FROM,
-                    "to": [to_email],
+                    "to": [actual_to],
                     "subject": subject,
                     "text": body,
                 },

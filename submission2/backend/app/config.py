@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     # Sign up free at resend.com → API Keys → Create Key
     RESEND_API_KEY: str = ""
     EMAIL_FROM: str = "QuickMove Operations <onboarding@resend.dev>"
+    # Without a verified domain, Resend only delivers to your own account email.
+    # Set this to your Resend account email to override all recipients during testing.
+    RESEND_TEST_RECIPIENT: str = ""
 
     # Legacy SMTP (only works when not on Render free)
     SMTP_HOST: str = "smtp.gmail.com"

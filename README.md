@@ -18,6 +18,27 @@ Live deployment:
 
 ---
 
+## Output Screenshots
+
+### AI Requirement Extraction
+After uploading a customer .docx, Gemini extracts all fields into a structured profile ready for review.
+
+![Requirement Extraction](assets/extract.png)
+
+### AI Broker Recommendations and Approval
+The ops executive sees the top 3 AI-ranked brokers with match scores and reasoning. One click approves and triggers the email.
+
+![Broker Approval](assets/approve.png)
+
+### Broker Assignment Email
+The assigned broker receives a formatted email with full customer requirements, preferred areas, and the response deadline.
+
+![Assignment Email 1](assets/mail1.jpeg)
+
+![Assignment Email 2](assets/mail2.jpeg)
+
+---
+
 ## System Architecture
 
 ```mermaid

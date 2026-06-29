@@ -9,7 +9,17 @@ interface Props {
   onCreated: (broker: Broker) => void;
 }
 
-const CITIES = ["Bengaluru", "Hyderabad", "Mumbai", "Pune", "Chennai", "Delhi", "Kolkata", "Ahmedabad"];
+const INDIAN_STATES = [
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+  "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+  "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+  "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+  "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+  // Union Territories
+  "Delhi (NCT)", "Jammu & Kashmir", "Ladakh", "Puducherry", "Chandigarh",
+  "Andaman & Nicobar Islands", "Dadra & Nagar Haveli", "Lakshadweep",
+];
+
 const PROPERTY_TYPE_OPTIONS = ["1BHK", "2BHK", "3BHK", "4BHK", "Studio", "Villa", "Row House", "Penthouse"];
 
 export default function AddBrokerModal({ onClose, onCreated }: Props) {
@@ -17,7 +27,8 @@ export default function AddBrokerModal({ onClose, onCreated }: Props) {
     name: "",
     email: "",
     phone: "",
-    city: "Bengaluru",
+    state: "Karnataka",
+    city: "",
     regions_raw: "",
     budget_min: "",
     budget_max: "",
@@ -128,27 +139,39 @@ export default function AddBrokerModal({ onClose, onCreated }: Props) {
             </Field>
           </div>
 
-          {/* Phone + City */}
+          {/* Phone */}
+          <Field label="Phone">
+            <input
+              type="tel"
+              placeholder="+91 98450 12345"
+              value={form.phone}
+              onChange={(e) => set("phone", e.target.value)}
+              className={inputClass}
+            />
+          </Field>
+
+          {/* State + City */}
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Phone">
-              <input
-                type="tel"
-                placeholder="+91 98450 12345"
-                value={form.phone}
-                onChange={(e) => set("phone", e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-            <Field label="City they serve *" hint="The city this broker operates in">
+            <Field label="State *">
               <select
+                value={form.state}
+                onChange={(e) => set("state", e.target.value)}
+                className={inputClass}
+              >
+                {INDIAN_STATES.map((s) => (
+                  <option key={s}>{s}</option>
+                ))}
+              </select>
+            </Field>
+            <Field label="City / District *" hint="e.g. Coimbatore, Madurai, Mysuru">
+              <input
+                type="text"
+                placeholder="Type city or district name"
                 value={form.city}
                 onChange={(e) => set("city", e.target.value)}
                 className={inputClass}
-              >
-                {CITIES.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
+                required
+              />
             </Field>
           </div>
 
